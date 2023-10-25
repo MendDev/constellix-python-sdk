@@ -44,3 +44,49 @@ sonar = SonarApi("api_key", "secret_key")
 ```
 
 Please check examples folder for sample usages
+
+
+# Mend
+
+Add to internal repository
+
+```
+gcloud artifacts print-settings python \
+    --project=mend-dev \
+    --repository=python-platform \
+    --location=us
+```
+
+Follow instructions above
+
+```
+python -m venv venv
+pip install --upgrade pip
+python -m pip install --upgrade build
+python -m build
+python -m pip install --upgrade twine
+pip install keyring
+pip install keyrings.google-artifactregistry-auth
+keyring --list-backends
+twine upload --repository-url https://us-python.pkg.dev/mend-dev/python-platform/ dist/*
+```
+
+To use in another project
+
+# Update the environment so that it can access the Mend API SDK
+
+```
+pip install keyrings.google-artifactregistry-auth
+```
+
+```
+# not needed just confirms the keyring is installed correctly.
+keyring --list-backends
+```
+ 
+# Install the Mend API SDK - pulls the latest version automatically.
+
+```
+RUN pip install --index-url https://us-python.pkg.dev/mend-dev/python-platform/simple/ constellixsdk
+```
+

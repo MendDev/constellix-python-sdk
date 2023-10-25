@@ -1,2 +1,4 @@
 build
 constellixsdk.egg-info
+dist/
+venv/
